@@ -53,6 +53,7 @@
                         <executions>
                             <execution>
                                 <id>boot-start</id>
+                                <phase>pre-integration-test</phase>
                                 <goals>
                                     <goal>start</goal>
                                 </goals>
