@@ -12,14 +12,28 @@
         <java.version>11</java.version>
         <maven.compiler.version>3.11.0</maven.compiler.version>
         <maven.surefire.version>3.0.0</maven.surefire.version>        
+        <maven.failsafe.version>3.0.0</maven.failsafe.version>
         <karate.version>1.4.1</karate.version>
         <junit.version>5.7.0</junit.version>
         <fasterxml.version>2.14.0</fasterxml.version>
         <masterthought.version>5.7.0</masterthought.version>
         <scala.maven.plugin.version>4.8.1</scala.maven.plugin.version>
+        <openapi.generator.version>7.7.0</openapi.generator.version>
     </properties>    
 
     <dependencies>         
+        <dependency>
+            <groupId>com.intuit.karate</groupId>
+            <artifactId>karate-core</artifactId>
+            <version>${karate.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.intuit.karate</groupId>
+            <artifactId>karate-apache</artifactId>
+            <version>${karate.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.intuit.karate</groupId>
             <artifactId>karate-junit5</artifactId>
@@ -88,7 +102,94 @@
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi.generator.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-karate-from-openapi</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.parent.parent.basedir}/docs/openapi.yaml</inputSpec>
+                            <generatorName>karate</generatorName>
+                            <output>${project.basedir}/target/generated-karate</output>
+                            <skipValidateSpec>false</skipValidateSpec>
+                            <templateDirectory>${project.basedir}/src/test/resources/_templates/karate</templateDirectory>
+                            <configOptions>
+                                <packageName>tests.generated</packageName>
+                                <useSingleRequestFile>true</useSingleRequestFile>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-generated-karate-assets</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/src/test/resources/tests/generated</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/target/generated-karate</directory>
+                                    <includes>
+                                        <include>**/*.feature</include>
+                                    </includes>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-generated-mockdata</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/src/test/resources/tests/generated/__mockdata__</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/target/generated-karate</directory>
+                                    <includes>
+                                        <include>**/*.json</include>
+                                    </includes>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>        
     </build>       
     
+    <profiles>
+        <profile>
+            <id>gen-from-openapi</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.openapitools</groupId>
+                        <artifactId>openapi-generator-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

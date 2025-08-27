@@ -1,0 +1,58 @@
+name: E2E OpenAPI Docs
+
+on:
+  push:
+    branches: [ main, feat/auto-gen-e2e-openapi-docs ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Generate OpenAPI from app
+        run: mvn -pl code -Popenapi -B -ntp verify
+
+      - name: Upload OpenAPI spec
+        uses: actions/upload-artifact@v4
+        with:
+          name: openapi-spec
+          path: docs/openapi.yaml
+
+      - name: Generate Karate from OpenAPI and run tests
+        run: mvn -pl e2e/karate -Pgen-from-openapi -B -ntp generate-test-sources test
+
+      - name: Upload Karate Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: karate-reports
+          path: |
+            e2e/karate/target/karate-reports/**
+            e2e/karate/target/cucumber-html-reports/**
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install deps and build TypeDoc
+        run: |
+          npm ci
+          npm run docs
+
+      - name: Upload TypeDoc
+        uses: actions/upload-artifact@v4
+        with:
+          name: typedoc
+          path: docs/typedoc/**

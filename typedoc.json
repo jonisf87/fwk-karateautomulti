@@ -1,0 +1,7 @@
+{
+  "entryPoints": ["e2e/karate/combine-reports.js"],
+  "out": "docs/typedoc",
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": true
+}

@@ -4,7 +4,7 @@ Este proyecto utiliza **Karate** como framework principal para pruebas funcional
 
 ---
 
-## � Cómo Ejecutar el Proyecto
+## ¿Cómo Ejecutar el Proyecto
 
 ### 0. Prerrequisitos
 
@@ -209,24 +209,38 @@ El script buscará los reportes JSON en la carpeta de destino y generará un arc
 
 ---
 
-## 🤝 Contribuir
+## Scaffold E2E with Archetype
 
-1. Fork el proyecto.
-2. Crea una feature branch (`git checkout -b feature/nueva-funcionalidad`).
-3. Commit tus cambios (`git commit -am 'Agregar nueva funcionalidad'`).
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`).
-5. Crear un Pull Request.
+Para crear un nuevo proyecto de E2E basado en esta estructura de Karate, usa el arquetipo Maven:
 
----
+```bash
+mvn archetype:generate      -DarchetypeGroupId=com.izertis.qa      -DarchetypeArtifactId=karate-e2e-archetype      -DarchetypeVersion=1.0.0      -DgroupId=com.mycompany.app      -DartifactId=e2e-karate      -Dversion=1.0.0-SNAPSHOT      -DinteractiveMode=false
+```
 
-## 🎯 Próximos Pasos
-
-1. **Configura tu entorno**: Asegúrate de tener todas las dependencias instaladas.
-2. **Elige tu enfoque**: Decide si necesitas pruebas funcionales, de rendimiento o ambas.
-3. **Ejecuta las pruebas**: Usa los comandos proporcionados para comenzar.
-4. **Explora los reportes**: Revisa los resultados en los reportes nativos de Karate o Gatling.
-5. **Integra con Jira**: Usa `combine-reports.js` para consolidar reportes.
+Consulta `scripts/build-e2e-archetype.md` para construir/instalar el arquetipo desde este repo.
 
 ---
 
-¿Tienes dudas? Revisa la estructura del proyecto o consulta la documentación de Karate para más detalles.
+## Generate OpenAPI via Maven
+
+Genera `docs/openapi.yaml` desde la app Spring Boot:
+
+```bash
+mvn -pl code -Popenapi verify
+# outputs: docs/openapi.yaml
+```
+
+---
+
+## Generate Karate Tests from OpenAPI
+
+Genera features de Karate y mock data a partir de `docs/openapi.yaml`:
+
+```bash
+# 1) Generar OpenAPI desde la app
+mvn -pl code -Popenapi verify
+# 2) Generar Karate tests + mock data desde OpenAPI
+mvn -pl e2e/karate -Pgen-from-openapi generate-test-sources
+```
+
+Los features se copian a `e2e/karate/src/test/resources/tests/generated` y el mock data a `e2e/karate/src/test/resources/tests/generated/__mockdata__`.
