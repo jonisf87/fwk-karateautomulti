@@ -21,6 +21,12 @@ buildNumber.properties
 hs_err_pid*
 .allure/
 
+# Node
+node_modules/
+
+# Docs output
+/docs/typedoc/
+
 # IDE
 .idea/
 *.iws
@@ -99,4 +105,4 @@ msedgedriver*
 
 # Temporary files
 *.tmp
-*.temp 
+*.temp

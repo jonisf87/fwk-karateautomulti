@@ -1,0 +1,12 @@
+Feature: {{summary}}
+  Background:
+    * def baseUrl = karate.get('baseUrl') || karate.properties['baseUrl'] || karate.env.baseUrl
+    * url baseUrl
+
+{{#operations}}
+  @generated @{{httpMethod}}
+  Scenario: {{operationId}}
+    Given path '{{path}}'
+    And method {{httpMethod}}
+    Then status {{#responses}}{{code}}{{/responses}}
+{{/operations}}
