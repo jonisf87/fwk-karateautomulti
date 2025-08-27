@@ -119,7 +119,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.parent.parent.basedir}/docs/openapi.yaml</inputSpec>
+                            <inputSpec>${session.executionRootDirectory}/docs/openapi.yaml</inputSpec>
                             <generatorName>karate</generatorName>
                             <output>${project.basedir}/target/generated-karate</output>
                             <skipValidateSpec>false</skipValidateSpec>
