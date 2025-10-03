@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Archetype Karate E2E :: Auto Karate Docs</title>
+    <link rel="prev" href="../microservice/index.html">
+    <link rel="next" href="../docs/index.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../..">Auto Karate Docs</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="../..">Home</a>
+        <!-- Products/Services removed by supplemental override -->
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="auto-karate" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Auto Karate Docs</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Inicio</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../karate/index.html">Karate E2E</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../microservice/index.html">Microservicio demo</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="index.html">Arquetipo Karate E2E</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../docs/index.html">Docs del sitio</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Auto Karate Docs</a></li>
+    <li><a href="index.html">Arquetipo Karate E2E</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/jonisf87/fwk-karateautomulti/edit/main/code/docs/modules/archetype/pages/index.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Archetype Karate E2E</h1>
+<h1>Archetype Karate E2E</h1>
+<p>Arquetipo Maven para generar:</p>
+<h1>Archetype Karate E2E</h1>
+<p>Arquetipo Maven para generar:</p>
+<ul>
+<li>Módulo siempre: <code>e2e/karate</code> con tests Karate.</li>
+<li>Módulo opcional: <code>code</code> (micro Spring Boot) controlado por <code>includeCodeModule</code>.</li>
+</ul>
+<h2>1. Instalar el arquetipo localmente</h2>
+<p>Desde la raíz del repo que contiene <code>code/archetype-karate-e2e</code>:</p>
+<pre><code class="language-bash">mvn -f code/archetype-karate-e2e clean install
+</code></pre>
+<h2>2. Generar proyecto SIN micro (modo offline por defecto)</h2>
+<pre><code class="language-bash">mvn archetype:generate \
+  -DarchetypeGroupId=com.example.archetypes \
+  -DarchetypeArtifactId=archetype-karate-e2e \
+  -DarchetypeVersion=1.0.6-SNAPSHOT \
+  -DgroupId=com.acme \
+  -DartifactId=demo-e2e-no-micro \
+  -Dversion=1.0.0-SNAPSHOT \
+  -Dpackage=com.acme.demo \
+  -DincludeCodeModule=false \
+  -B
+
+cd demo-e2e-no-micro
+mvn -pl e2e/karate test
+</code></pre>
+<p>El proyecto generado incluye un feature OFFLINE (sin llamadas HTTP) para garantizar que los tests pasan incluso en entornos restringidos.</p>
+<p>Ejecutar:</p>
+<pre><code class="language-bash">mvn -pl e2e/karate test
+</code></pre>
+<h3>(Opcional) Activar mock embebido</h3>
+<p>Dentro del feature <code>getProductsLocal.feature</code> hay un escenario comentado <code>(ejemplo mock embebido)</code>. Descoméntalo si tu entorno soporta <code>karate.start()</code>:</p>
+<pre><code class="language-gherkin">Scenario: (ejemplo mock embebido)
+  * def mock = karate.start(&#39;classpath:mocks/products-mock.feature&#39;)
+  Given url mock.url + &#39;products&#39;
+  When method get
+  Then status 200
+</code></pre>
+<p>Si obtienes <code>Connection refused</code>, deja el escenario comentado y permanece en modo offline.</p>
+<h2>3. Generar proyecto CON micro</h2>
+<pre><code class="language-bash">mvn archetype:generate \
+  -DarchetypeGroupId=com.example.archetypes \
+  -DarchetypeArtifactId=archetype-karate-e2e \
+  -DarchetypeVersion=1.0.6-SNAPSHOT \
+  -DgroupId=com.acme \
+  -DartifactId=demo-e2e-with-micro \
+  -Dversion=1.0.0-SNAPSHOT \
+  -Dpackage=com.acme.demo \
+  -DincludeCodeModule=true \
+  -B
+</code></pre>
+<p>Levantar micro (puerto 9090 por ejemplo):</p>
+<pre><code class="language-bash">cd demo-e2e-with-micro
+export APP_PORT=9090
+mvn -pl code -am spring-boot:run -Dspring-boot.run.arguments=--server.port=$APP_PORT
+</code></pre>
+<p>En otra terminal:</p>
+<pre><code class="language-bash">cd demo-e2e-with-micro
+export APP_PORT=9090
+mvn -pl e2e/karate test
+</code></pre>
+<p>En Windows PowerShell:</p>
+<pre><code class="language-powershell">$env:APP_PORT=9090
+mvn -pl e2e/karate test
+</code></pre>
+<h2>4. Notas</h2>
+<ul>
+<li>Variable <code>includeCodeModule=true|false</code>.</li>
+<li><code>karate-config.js</code> selecciona <code>demoApplicationUrl</code> según <code>APP_PORT</code> o entorno.</li>
+<li><code>getProductsLocal.feature</code> ahora está en modo offline estable y documenta cómo habilitar un mock embebido opcional.</li>
+</ul>
+<nav class="pagination">
+  <span class="prev"><a href="../microservice/index.html">Microservicio demo</a></span>
+  <span class="next"><a href="../docs/index.html">Docs del sitio</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p><strong>Auto Karate Docs</strong> — Hecho con cariño por el equipo. Documentación viva para impulsar E2E con Karate.</p>
+  <p>
+    <span>UI personalizada basada en Antora.</span>
+    <span> ¿Sugerencias? Abre un issue en el repo.</span>
+  </p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
