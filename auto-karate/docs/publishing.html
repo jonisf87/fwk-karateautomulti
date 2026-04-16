@@ -211,9 +211,6 @@ strong,b,.doc strong,.doc b{color:#f8fafc;font-weight:700}
 <p>Build de Antora con el playbook de produccion.</p>
 </li>
 <li>
-<p>Flatten del directorio <code>auto-karate/</code> generado por Antora.</p>
-</li>
-<li>
 <p>Creacion de <code>.nojekyll</code>.</p>
 </li>
 <li>
@@ -232,7 +229,10 @@ strong,b,.doc strong,.doc b{color:#f8fafc;font-weight:700}
 <p>La build publicada debe usar los scripts del propio workspace, no una instalacion global distinta de Antora.</p>
 </li>
 <li>
-<p>El flatten sigue siendo necesario porque el componente se genera bajo <code>auto-karate/</code>.</p>
+<p>El sitio debe publicarse con la estructura completa generada por Antora, incluido el directorio <code>auto-karate/</code>.</p>
+</li>
+<li>
+<p>La pagina raiz de GitHub Pages actua como redireccion al <code>start_page</code> generado por Antora.</p>
 </li>
 <li>
 <p>La URL publica configurada en el playbook es <code><a href="https://jonisf87.github.io/fwk-karateautomulti/" class="bare">https://jonisf87.github.io/fwk-karateautomulti/</a></code>.</p>
@@ -266,7 +266,7 @@ npm run build:prod</code></pre>
 <p>overrides desalineados entre <code>ui/ui-bundle.zip</code> y <code>ui/supplemental/**</code></p>
 </li>
 <li>
-<p>enlaces absolutos que dependan de una ruta distinta a GitHub Pages</p>
+<p>enlaces personalizados que asuman una raiz distinta de la que publica Antora</p>
 </li>
 <li>
 <p>paginas nuevas no enlazadas desde <code>modules/ROOT/nav.adoc</code></p>
