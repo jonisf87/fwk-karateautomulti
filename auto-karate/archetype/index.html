@@ -191,6 +191,16 @@ strong,b,.doc strong,.doc b{color:#f8fafc;font-weight:700}
 <div class="paragraph">
 <p>El arquetipo <code>code/archetype-karate-e2e</code> genera proyectos alineados con el estado actual del repositorio: Java 21, Karate 2.0.2, runner JUnit Platform, soporte <code>APP_PORT</code> para <code>@local</code> y workflow de CI de base.</p>
 </div>
+<div class="paragraph">
+<p>Coordenadas publicas previstas:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>io.github.jonisf87.archetypes:archetype-karate-e2e</code></p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -204,14 +214,68 @@ strong,b,.doc strong,.doc b{color:#f8fafc;font-weight:700}
 </div>
 </div>
 <div class="sect1">
+<h2 id="_consumirlo_desde_github_packages"><a class="anchor" href="#_consumirlo_desde_github_packages"></a>Consumirlo desde GitHub Packages</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>GitHub Packages para Maven requiere autenticacion tambien para paquetes publicos. Para consumir el arquetipo remoto:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>crea un token classic con <code>read:packages</code></p>
+</li>
+<li>
+<p>exporta <code>GITHUB_PACKAGES_TOKEN</code></p>
+</li>
+<li>
+<p>configura <code>~/.m2/settings.xml</code> con el repositorio <code><a href="https://maven.pkg.github.com/jonisf87/fwk-karateautomulti" class="bare">https://maven.pkg.github.com/jonisf87/fwk-karateautomulti</a></code></p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd"&gt;
+  &lt;activeProfiles&gt;
+    &lt;activeProfile&gt;github-archetype&lt;/activeProfile&gt;
+  &lt;/activeProfiles&gt;
+  &lt;profiles&gt;
+    &lt;profile&gt;
+      &lt;id&gt;github-archetype&lt;/id&gt;
+      &lt;repositories&gt;
+        &lt;repository&gt;
+          &lt;id&gt;central&lt;/id&gt;
+          &lt;url&gt;https://repo.maven.apache.org/maven2&lt;/url&gt;
+        &lt;/repository&gt;
+        &lt;repository&gt;
+          &lt;id&gt;github&lt;/id&gt;
+          &lt;url&gt;https://maven.pkg.github.com/jonisf87/fwk-karateautomulti&lt;/url&gt;
+        &lt;/repository&gt;
+      &lt;/repositories&gt;
+    &lt;/profile&gt;
+  &lt;/profiles&gt;
+  &lt;servers&gt;
+    &lt;server&gt;
+      &lt;id&gt;github&lt;/id&gt;
+      &lt;username&gt;jonisf87&lt;/username&gt;
+      &lt;password&gt;${env.GITHUB_PACKAGES_TOKEN}&lt;/password&gt;
+    &lt;/server&gt;
+  &lt;/servers&gt;
+&lt;/settings&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_generar_un_proyecto_solo_con_e2e"><a class="anchor" href="#_generar_un_proyecto_solo_con_e2e"></a>Generar un proyecto solo con E2E</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvn archetype:generate \
-  -DarchetypeGroupId=com.example.archetypes \
+  -DarchetypeGroupId=io.github.jonisf87.archetypes \
   -DarchetypeArtifactId=archetype-karate-e2e \
-  -DarchetypeVersion=1.0.6-SNAPSHOT \
+  -DarchetypeVersion=1.0.0-SNAPSHOT \
   -DgroupId=com.acme \
   -DartifactId=demo-e2e-no-micro \
   -Dversion=1.0.0-SNAPSHOT \
@@ -231,9 +295,9 @@ strong,b,.doc strong,.doc b{color:#f8fafc;font-weight:700}
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mvn archetype:generate \
-  -DarchetypeGroupId=com.example.archetypes \
+  -DarchetypeGroupId=io.github.jonisf87.archetypes \
   -DarchetypeArtifactId=archetype-karate-e2e \
-  -DarchetypeVersion=1.0.6-SNAPSHOT \
+  -DarchetypeVersion=1.0.0 \
   -DgroupId=com.acme \
   -DartifactId=demo-e2e-con-micro \
   -Dversion=1.0.0-SNAPSHOT \
@@ -317,6 +381,30 @@ mvn -pl e2e/karate clean verify '-Dkarate.options=--tags ~@local'</code></pre>
 <div class="sectionbody">
 <div class="paragraph">
 <p>El arquetipo se ha validado generando un proyecto real con <code>includeCodeModule=true</code>, ejecutando <code>code/</code>, la suite <code>~@local</code> y el flujo <code>@local</code> contra un servicio demo levantado en un puerto distinto de <code>8080</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_flujo_de_release"><a class="anchor" href="#_flujo_de_release"></a>Flujo de release</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La publicacion remota del arquetipo se realiza con tags <code>vX.Y.Z</code> mediante <code>.github/workflows/publish-archetype.yml</code>. El workflow:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>toma la version desde el tag</p>
+</li>
+<li>
+<p>ajusta el <code>pom.xml</code> del modulo solo dentro del job</p>
+</li>
+<li>
+<p>valida la generacion del arquetipo desde el catalogo local</p>
+</li>
+<li>
+<p>publica el artefacto en GitHub Packages</p>
+</li>
+</ul>
 </div>
 </div>
 </div>

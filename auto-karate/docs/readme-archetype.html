@@ -194,21 +194,68 @@ strong,b,.doc strong,.doc b{color:#f8fafc;font-weight:700}
 <li>soporte <code>APP_PORT</code> para <code>@local</code></li>
 <li>workflow de CI base</li>
 </ul>
+<p>Coordenadas del arquetipo:</p>
+<ul>
+<li><code>io.github.jonisf87.archetypes:archetype-karate-e2e</code></li>
+</ul>
 <h2>Requirements</h2>
 <ul>
 <li>Java 21</li>
 <li>Maven 3.9 o superior</li>
 </ul>
 <h2>Installation</h2>
-<p>Desde la raiz del repositorio:</p>
+<p>Uso local desde la raiz del repositorio:</p>
 <pre><code class="language-bash">mvn -f code/archetype-karate-e2e/pom.xml clean install
 </code></pre>
+<p>Uso remoto desde GitHub Packages:</p>
+<ol>
+<li>Crea un token classic con <code>read:packages</code>.</li>
+<li>Añadelo a <code>~/.m2/settings.xml</code>:</li>
+</ol>
+<pre><code class="language-xml">&lt;settings xmlns=&quot;http://maven.apache.org/SETTINGS/1.0.0&quot;
+          xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+          xsi:schemaLocation=&quot;http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd&quot;&gt;
+  &lt;activeProfiles&gt;
+    &lt;activeProfile&gt;github-archetype&lt;/activeProfile&gt;
+  &lt;/activeProfiles&gt;
+
+  &lt;profiles&gt;
+    &lt;profile&gt;
+      &lt;id&gt;github-archetype&lt;/id&gt;
+      &lt;repositories&gt;
+        &lt;repository&gt;
+          &lt;id&gt;central&lt;/id&gt;
+          &lt;url&gt;https://repo.maven.apache.org/maven2&lt;/url&gt;
+        &lt;/repository&gt;
+        &lt;repository&gt;
+          &lt;id&gt;github&lt;/id&gt;
+          &lt;url&gt;https://maven.pkg.github.com/jonisf87/fwk-karateautomulti&lt;/url&gt;
+          &lt;snapshots&gt;
+            &lt;enabled&gt;true&lt;/enabled&gt;
+          &lt;/snapshots&gt;
+        &lt;/repository&gt;
+      &lt;/repositories&gt;
+    &lt;/profile&gt;
+  &lt;/profiles&gt;
+
+  &lt;servers&gt;
+    &lt;server&gt;
+      &lt;id&gt;github&lt;/id&gt;
+      &lt;username&gt;jonisf87&lt;/username&gt;
+      &lt;password&gt;${env.GITHUB_PACKAGES_TOKEN}&lt;/password&gt;
+    &lt;/server&gt;
+  &lt;/servers&gt;
+&lt;/settings&gt;
+</code></pre>
+<p>Exporta el token antes de usar Maven:</p>
+<pre><code class="language-bash">export GITHUB_PACKAGES_TOKEN=&lt;tu-token-read-packages&gt;
+</code></pre>
 <h2>Execution</h2>
-<p>Generar proyecto solo con E2E:</p>
+<p>Generar proyecto solo con E2E en local:</p>
 <pre><code class="language-bash">mvn archetype:generate \
-  -DarchetypeGroupId=com.example.archetypes \
+  -DarchetypeGroupId=io.github.jonisf87.archetypes \
   -DarchetypeArtifactId=archetype-karate-e2e \
-  -DarchetypeVersion=1.0.6-SNAPSHOT \
+  -DarchetypeVersion=1.0.0-SNAPSHOT \
   -DgroupId=com.acme \
   -DartifactId=demo-e2e-no-micro \
   -Dversion=1.0.0-SNAPSHOT \
@@ -216,11 +263,11 @@ strong,b,.doc strong,.doc b{color:#f8fafc;font-weight:700}
   -DincludeCodeModule=false \
   -DinteractiveMode=false
 </code></pre>
-<p>Generar proyecto con microservicio demo:</p>
+<p>Generar proyecto con microservicio demo desde GitHub Packages:</p>
 <pre><code class="language-bash">mvn archetype:generate \
-  -DarchetypeGroupId=com.example.archetypes \
+  -DarchetypeGroupId=io.github.jonisf87.archetypes \
   -DarchetypeArtifactId=archetype-karate-e2e \
-  -DarchetypeVersion=1.0.6-SNAPSHOT \
+  -DarchetypeVersion=1.0.0 \
   -DgroupId=com.acme \
   -DartifactId=demo-e2e-con-micro \
   -Dversion=1.0.0-SNAPSHOT \
@@ -238,6 +285,7 @@ strong,b,.doc strong,.doc b{color:#f8fafc;font-weight:700}
 <ul>
 <li>Cualquier cambio de versiones o flujo local del repo principal debe replicarse aqui.</li>
 <li>Valida siempre el proyecto generado, no solo el modulo del arquetipo.</li>
+<li>Las releases publicas se publican con tags <code>vX.Y.Z</code> y el workflow <code>.github/workflows/publish-archetype.yml</code>.</li>
 </ul>
 </article>
   </div>
