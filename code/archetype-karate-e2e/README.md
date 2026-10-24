@@ -100,7 +100,7 @@ Generar proyecto con microservicio demo desde GitHub Packages:
 mvn archetype:generate \
   -DarchetypeGroupId=io.github.jonisf87.archetypes \
   -DarchetypeArtifactId=archetype-karate-e2e \
-  -DarchetypeVersion=1.0.0 \
+  -DarchetypeVersion=1.0.1 \
   -DgroupId=com.acme \
   -DartifactId=demo-e2e-con-micro \
   -Dversion=1.0.0-SNAPSHOT \
