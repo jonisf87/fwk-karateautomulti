@@ -15,7 +15,7 @@
             <defaultValue>false</defaultValue>
         </requiredProperty>
         <requiredProperty key="karateVersion">
-            <defaultValue>2.0.2</defaultValue>
+            <defaultValue>2.1.4</defaultValue>
         </requiredProperty>
     </requiredProperties>
 

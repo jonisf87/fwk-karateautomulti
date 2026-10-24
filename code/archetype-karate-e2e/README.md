@@ -7,7 +7,7 @@ Arquetipo Maven para generar proyectos con `e2e/karate` y, opcionalmente, con un
 El proyecto generado hereda el stack actual del repositorio:
 
 * Java 21
-* Karate 2.0.2
+* Karate 2.1.4
 * runner JUnit Platform
 * soporte `APP_PORT` para `@local`
 * workflow de CI base

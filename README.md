@@ -1,13 +1,19 @@
 # FWK Karate AutoMulti
 
+[![Publish Maven Archetype](https://github.com/jonisf87/fwk-karateautomulti/actions/workflows/publish-archetype.yml/badge.svg)](https://github.com/jonisf87/fwk-karateautomulti/actions/workflows/publish-archetype.yml)
+[![Publish Antora Site](https://github.com/jonisf87/fwk-karateautomulti/actions/workflows/antora.yml/badge.svg)](https://github.com/jonisf87/fwk-karateautomulti/actions/workflows/antora.yml)
+![Java 21](https://img.shields.io/badge/Java-21-blue)
+![Karate 2.1.4](https://img.shields.io/badge/Karate-2.1.4-green)
+![Spring Boot 4.1.2](https://img.shields.io/badge/Spring%20Boot-4.1.2-brightgreen)
+
 Repositorio de referencia para automatizacion E2E con Karate, microservicio Spring Boot, documentacion Antora y un arquetipo Maven reutilizable.
 
 ## Overview
 
 El proyecto agrupa cuatro piezas:
 
-* `code/`: microservicio demo Spring Boot con el endpoint `/products`
-* `e2e/karate/`: suite E2E con Karate 2.0.2
+* `code/`: microservicio demo Spring Boot 4.1.2 con el endpoint `/products`
+* `e2e/karate/`: suite E2E con Karate 2.1.4
 * `code/archetype-karate-e2e/`: arquetipo Maven para generar proyectos alineados con este stack
 * `code/docs/`: sitio Antora publicado en GitHub Pages
 
@@ -18,8 +24,8 @@ Documentacion online:
 ## Requirements
 
 * Java 21
-* Maven 3.9 o superior
-* Node.js 18 o superior
+* Maven 3.9 o superior (probado con 3.9.11)
+* Node.js 22 o superior
 * Git
 
 ## Installation

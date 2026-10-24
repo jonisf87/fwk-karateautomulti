@@ -1,7 +1,7 @@
 = Microservicio demo
 :page-component: auto-karate
 
-El modulo `code/` es un Spring Boot 3.5.13 sobre Java 21. Expone un endpoint sencillo pero suficiente para validar el flujo local real de Karate y del arquetipo generado.
+El modulo `code/` es un Spring Boot 4.1.2 sobre Java 21. Expone un endpoint sencillo pero suficiente para validar el flujo local real de Karate y del arquetipo generado.
 
 == Endpoint
 

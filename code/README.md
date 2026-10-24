@@ -1,6 +1,6 @@
 # Microservicio demo
 
-Modulo Spring Boot 3.5.13 sobre Java 21. Su objetivo es dar soporte al flujo local de la suite Karate y al proyecto generado por el arquetipo.
+Modulo Spring Boot 4.1.2 sobre Java 21. Su objetivo es dar soporte al flujo local de la suite Karate y al proyecto generado por el arquetipo.
 
 ## Overview
 
