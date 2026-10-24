@@ -91,7 +91,7 @@ target/
 try {
     def parentPom = new File(outputDir, 'pom.xml')
     // Intentar obtener la versión de Karate y el package suministrados
-        def kVersion = props['karateVersion'] ?: (binding.hasVariable('request') ? request?.properties?.get('karateVersion') : null) ?: System.getProperty('karateVersion') ?: '2.0.2'
+        def kVersion = props['karateVersion'] ?: (binding.hasVariable('request') ? request?.properties?.get('karateVersion') : null) ?: System.getProperty('karateVersion') ?: '2.1.4'
     def pkgValue = props['package'] ?: (binding.hasVariable('request') ? request?.properties?.get('package') : null) ?: System.getProperty('package')
     if(parentPom.exists()){
         def parentTxt = parentPom.getText('UTF-8')

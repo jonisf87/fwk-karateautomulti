@@ -1,6 +1,6 @@
 # Karate E2E
 
-Suite E2E del repositorio, basada en Karate 2.0.2 y Java 21.
+Suite E2E del repositorio, basada en Karate 2.1.4 y Java 21.
 
 ## Overview
 

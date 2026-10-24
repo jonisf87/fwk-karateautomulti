@@ -1,7 +1,7 @@
 = Karate E2E
 :page-component: auto-karate
 
-La suite E2E vive en `e2e/karate` y usa Karate 2.0.2 sobre Java 21. Su funcionamiento diferencia con claridad el flujo remoto estandar y el flujo local del desarrollador.
+La suite E2E vive en `e2e/karate` y usa Karate 2.1.4 sobre Java 21. Su funcionamiento diferencia con claridad el flujo remoto estandar y el flujo local del desarrollador.
 
 == Comandos principales
 

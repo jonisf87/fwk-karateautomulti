@@ -14,7 +14,7 @@ Contiene:
 
 ## Requirements
 
-* Node.js 18 o superior
+* Node.js 22 o superior
 
 ## Installation
 

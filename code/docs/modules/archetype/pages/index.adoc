@@ -1,7 +1,7 @@
 = Arquetipo Maven
 :page-component: auto-karate
 
-El arquetipo `code/archetype-karate-e2e` genera proyectos alineados con el estado actual del repositorio: Java 21, Karate 2.0.2, runner JUnit Platform, soporte `APP_PORT` para `@local` y workflow de CI de base.
+El arquetipo `code/archetype-karate-e2e` genera proyectos alineados con el estado actual del repositorio: Java 21, Karate 2.1.4, runner JUnit Platform, soporte `APP_PORT` para `@local` y workflow de CI de base.
 
 Coordenadas publicas previstas:
 

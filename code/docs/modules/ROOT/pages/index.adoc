@@ -20,7 +20,7 @@ Este repositorio reune un microservicio demo, una suite E2E con Karate, un arque
   Arranca el microservicio, ejecuta la verificacion remota y prueba el flujo `@local` contra una instancia real. +
   xref:getting-started.adoc[Ver pasos y comandos]
 * [.home-card-title]#Karate E2E# +
-  La suite usa Karate 2.0.2 sobre Java 21, con entorno `pre` para ejecucion remota y `local` para desarrollador. +
+  La suite usa Karate 2.1.4 sobre Java 21, con entorno `pre` para ejecucion remota y `local` para desarrollador. +
   xref:karate:index.adoc[Ir al modulo E2E]
 * [.home-card-title]#Microservicio demo# +
   El servicio Spring Boot expone `/products` y sirve como apoyo al flujo local de desarrollo y al proyecto generado por el arquetipo. +
@@ -35,7 +35,7 @@ Este repositorio reune un microservicio demo, una suite E2E con Karate, un arque
 == Estado actual del proyecto
 
 * Java 21 en microservicio, suite E2E y arquetipo.
-* Karate 2.0.2 y ejecucion estandar con `--tags ~@local`.
+* Karate 2.1.4 y ejecucion estandar con `--tags ~@local`.
 * Flujo `@local` pensado para desarrollador: requiere levantar el servicio demo.
 * Publicacion automatica de la documentacion en GitHub Pages desde `.github/workflows/antora.yml`.
 
