@@ -32,6 +32,6 @@ asciidoc:
 antora:
   extensions: []
 urls:
-  redirect_facility: disabled
+  redirect_facility: static
 output:
   dir: ./build/site
